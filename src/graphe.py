@@ -10,6 +10,15 @@
 """
 Génération du graphe permettant de coder un algorithme glouton.
 """
+import random as rd
+
+
+def echange(liste, el1, el2):
+    """Echange les éléments el1 et el2 dans la liste."""
+    ind1 = liste.index(el1)
+    ind2 = liste.index(el2)
+    liste[ind1] = el2
+    liste[ind2] = el1
 
 
 class Graphe:
@@ -34,3 +43,13 @@ class Graphe:
 
     def __str__(self):
         return "{}\n{}".format(self.demarrage, self.voisins)
+
+    def mutation(self):
+        """Détermine une transition possible et l'ajoute à l'historique."""
+        entier1, entier2 = rd.sample(self.demarrage, 2)
+        echange(self.demarrage, entier1, entier2)
+        self.hist_d.append((entier1, entier2))
+        entier = rd.choice(self.demarrage)
+        voisin1, voisin2 = rd.sample(self.voisins[entier], 2)
+        echange(self.voisins[entier], voisin1, voisin2)
+        self.hist_v.append((entier, voisin1, voisin2))
