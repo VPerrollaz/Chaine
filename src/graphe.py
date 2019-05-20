@@ -31,11 +31,10 @@ class Mouvement:
     def __repr__(self):
         return "Mouvement({}, {})".format(self.demarrage, self.voisinage)
 
-    def oppose(self):
-        """Renvoit le mouvement inverse."""
-        en1, en2 = self.demarrage
-        ent, voi1, voi2 = self.voisinage
-        return Mouvement((en2, en1), (ent, voi2, voi1))
+    def __str__(self):
+        return "Depart: {} <-> {} \nVoisin: {}, {} <-> {}".format(
+            *self.demarrage, *self.voisinage
+        )
 
 
 class Graphe:
@@ -79,4 +78,4 @@ class Graphe:
     def inversion(self):
         """Annule le dernier mouvement et l'enlève de l'historique."""
         mouv = self.historique.pop()
-        self.modification(mouv.oppose())
+        self.modification(mouv)
