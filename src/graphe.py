@@ -13,6 +13,8 @@ Génération du graphe permettant de coder un algorithme glouton.
 
 
 class Graphe:
+    """Classe permettant la paramétrisation d'un algorithme glouton."""
+
     def __init__(self, N):
         self.nb_max = N
         self.demarrage = list(range(1, N + 1))
@@ -24,6 +26,8 @@ class Graphe:
                     continue
                 if (i % j == 0) or (j % i == 0):
                     self.voisins[i].append(j)
+        self.hist_d = list()
+        self.hist_v = list()
 
     def __repr__(self):
         return f"Graphe({self.nb_max})"
