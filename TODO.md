@@ -1,5 +1,5 @@
 # A FAIRE
 
 - Ajoute le changement aléatoire du graphe, par permutation.
-- Fonctionnalité de duplication pour accepter ou rejeter.
+- Ajouter une fonctionnalité d'historique des permutations effectuées avec un revert possible.
 - Implémentation du recuit.
