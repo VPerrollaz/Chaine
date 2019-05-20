@@ -54,7 +54,7 @@ class Graphe:
     def __init__(self, demarrage, voisinage):
         self.demarrage = demarrage
         self.voisinage = voisinage
-        self.historique = list()
+        self.dernier = None
 
     @classmethod
     def default(cls, nb_sommets):
@@ -94,10 +94,10 @@ class Graphe:
             voisin1, voisin2 = rd.sample(self.voisinage[entier], 2)
             donnees = (entier, voisin1, voisin2)
         mouv = Mouvement(donnees)
-        self.historique.append(mouv)
+        self.dernier = mouv
         self.modification(mouv)
 
     def inversion(self):
         """Annule le dernier mouvement et l'enlève de l'historique."""
-        mouv = self.historique.pop()
-        self.modification(mouv)
+        self.modification(self.dernier)
+        self.dernier = None
