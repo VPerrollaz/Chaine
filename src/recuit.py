@@ -22,4 +22,4 @@ def auxiliaire(nombre: float) -> float:
 
 def energie(graphe: Graphe, temp: float) -> float:
     """Calcul de l'énergie d'un graphe pour un niveau de température donné."""
-    return exp(-len(glouton(graphe)) / temp)
+    return exp(len(glouton(graphe)) / temp)
