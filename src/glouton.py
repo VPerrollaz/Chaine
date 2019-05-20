@@ -8,11 +8,13 @@
 # Distributed under terms of the %LICENSE% license.
 
 """
-Fonction utilisant un graphe et implémentant l'algorithme glouton pour générer une chaine.
+Fonction implémentant l'algorithme glouton pour générer une chaine à partir
+d'un Graphe.
 """
+from src.graphe import Graphe
 
 
-def glouton(gra):
+def glouton(gra: Graphe) -> list:
     """Récupère un Graphe, renvoit la chaine générée."""
     chaine = list()
     visites = set()
@@ -21,7 +23,7 @@ def glouton(gra):
     visites.add(premier)
     while True:
         courant = chaine[-1]
-        for voisin in gra.voisins[courant]:
+        for voisin in gra.voisinage[courant]:
             if voisin not in visites:
                 chaine.append(voisin)
                 visites.add(voisin)

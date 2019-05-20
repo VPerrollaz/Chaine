@@ -16,11 +16,11 @@ from src.glouton import glouton
 
 def test_glouton_simple():
     """Test de l'algorithme glouton sur le graphe le plus simple."""
-    graphe = Graphe(2)
+    graphe = Graphe.default(2)
     assert glouton(graphe) == [1, 2]
 
 
 def test_glouton():
     """Cas moins simple"""
-    graphe = Graphe(10)
+    graphe = Graphe.default(10)
     assert glouton(graphe) == [1, 2, 4, 8]
