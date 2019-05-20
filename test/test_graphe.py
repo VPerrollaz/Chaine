@@ -11,11 +11,24 @@
 Teste du module graphe.
 """
 
-from src.graphe import Graphe
+from src.graphe import Graphe, Mouvement, echange
+
+
+def test_echange():
+    """Vérification simple."""
+    liste = [1, 2]
+    echange(liste, 1, 2)
+    assert liste == [2, 1]
+
+
+def test_instanciation_mouvement():
+    """Test instanciation et repr sur le graphe à trois sommets."""
+    mouv = Mouvement((1, 2), (1, 2, 3))
+    assert repr(mouv) == "Mouvement((1, 2), (1, 2, 3))"
 
 
 def test_initialisation_simplissime():
-    """Vérification de l'instanciation et de la création du graphe le plus simple."""
+    """Vérification sur le graphe le plus simple."""
     gra = Graphe(2)
     assert gra.demarrage == [1, 2]
     assert (gra.voisins[1] == [2]) and (gra.voisins[2] == [1])
