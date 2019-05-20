@@ -11,6 +11,14 @@
 Génération du graphe permettant de coder un algorithme glouton.
 """
 import random as rd
+from enum import Enum, auto
+
+
+class Genre(Enum):
+    """Enum pour gérer le genre de transition."""
+
+    Demarrage = auto()
+    Voisinage = auto()
 
 
 def echange(liste, el1, el2):
@@ -24,17 +32,20 @@ def echange(liste, el1, el2):
 class Mouvement:
     """Classe décrivant un mouvement possible dans un Graphe."""
 
-    def __init__(self, demarrage, voisinage):
-        self.demarrage = demarrage
-        self.voisinage = voisinage
+    def __init__(self, donnees):
+        if len(donnees) == 2:
+            self.genre = Genre.Demarrage
+        else:
+            self.genere = Genre.Voisinage
+        self.donnees = donnees
 
     def __repr__(self):
-        return "Mouvement({}, {})".format(self.demarrage, self.voisinage)
+        return "Mouvement({})".format(self.donnees)
 
     def __str__(self):
-        return "Depart: {} <-> {} \nVoisin: {}, {} <-> {}".format(
-            *self.demarrage, *self.voisinage
-        )
+        if self.genre is Genre.Demarrage:
+            return f"Demarrage: {self.donnees[0]} <-> {self.donnees[1]}"
+        return "Voisinage de {} : {} <-> {}".format(*self.donnees)
 
 
 class Graphe:
@@ -67,17 +78,22 @@ class Graphe:
 
     def modification(self, mouvement: Mouvement):
         """Modifie le graphe en fonction du mouvement demandé."""
-        entier1, entier2 = mouvement.demarrage
-        echange(self.demarrage, entier1, entier2)
-        entier, voisin1, voisin2 = mouvement.voisinage
-        echange(self.voisinage[entier], voisin1, voisin2)
+        if mouvement.genre is Genre.Demarrage:
+            entier1, entier2 = mouvement.donnees
+            echange(self.demarrage, entier1, entier2)
+        else:
+            entier, voisin1, voisin2 = mouvement.donnees
+            echange(self.voisinage[entier], voisin1, voisin2)
 
     def mutation(self):
         """Détermine une transition possible et l'ajoute à l'historique."""
-        entier1, entier2 = rd.sample(self.demarrage, 2)
-        entier = rd.choice(self.demarrage)
-        voisin1, voisin2 = rd.sample(self.voisinage[entier], 2)
-        mouv = Mouvement((entier1, entier2), (entier, voisin1, voisin2))
+        if rd.random() > 0.5:
+            donnees = rd.sample(self.demarrage, 2)
+        else:
+            entier = rd.choice(self.demarrage)
+            voisin1, voisin2 = rd.sample(self.voisinage[entier], 2)
+            donnees = (entier, voisin1, voisin2)
+        mouv = Mouvement(donnees)
         self.historique.append(mouv)
         self.modification(mouv)
 
