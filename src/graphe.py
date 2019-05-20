@@ -21,6 +21,23 @@ def echange(liste, el1, el2):
     liste[ind2] = el1
 
 
+class Mouvement:
+    """Classe décrivant un mouvement possible dans un Graphe."""
+
+    def __init__(self, demarrage, voisinage):
+        self.demarrage = demarrage
+        self.voisinage = voisinage
+
+    def __repr__(self):
+        return "Mouvement({}, {})".format(self.demarrage, self.voisinage)
+
+    def oppose(self):
+        """Renvoit le mouvement inverse."""
+        en1, en2 = self.demarrage
+        ent, voi1, voi2 = self.voisinage
+        return Mouvement((en2, en1), (ent, voi2, voi1))
+
+
 class Graphe:
     """Classe permettant la paramétrisation d'un algorithme glouton."""
 
@@ -35,8 +52,7 @@ class Graphe:
                     continue
                 if (i % j == 0) or (j % i == 0):
                     self.voisins[i].append(j)
-        self.hist_d = list()
-        self.hist_v = list()
+        self.historique = list()
 
     def __repr__(self):
         return f"Graphe({self.nb_max})"
@@ -44,12 +60,23 @@ class Graphe:
     def __str__(self):
         return "{}\n{}".format(self.demarrage, self.voisins)
 
+    def modification(self, mouvement: Mouvement):
+        """Modifie le graphe en fonction du mouvement demandé."""
+        entier1, entier2 = mouvement.demarrage
+        echange(self.demarrage, entier1, entier2)
+        entier, voisin1, voisin2 = mouvement.voisinage
+        echange(self.voisins[entier], voisin1, voisin2)
+
     def mutation(self):
         """Détermine une transition possible et l'ajoute à l'historique."""
         entier1, entier2 = rd.sample(self.demarrage, 2)
-        echange(self.demarrage, entier1, entier2)
-        self.hist_d.append((entier1, entier2))
         entier = rd.choice(self.demarrage)
         voisin1, voisin2 = rd.sample(self.voisins[entier], 2)
-        echange(self.voisins[entier], voisin1, voisin2)
-        self.hist_v.append((entier, voisin1, voisin2))
+        mouv = Mouvement((entier1, entier2), (entier, voisin1, voisin2))
+        self.historique.append(mouv)
+        self.modification(mouv)
+
+    def inversion(self):
+        """Annule le dernier mouvement et l'enlève de l'historique."""
+        mouv = self.historique.pop()
+        self.modification(mouv.oppose())
