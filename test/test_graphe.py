@@ -35,6 +35,12 @@ def test_mouvement_voisinage():
     assert mouv.genre is Genre.Voisinage
 
 
+def test_graphe_adhoc():
+    """Via le constructeur basique."""
+    graphe = Graphe(demarrage=[1, 2, 3], voisinage={1: [2, 3], 2: [1], 3: [1]})
+    assert isinstance(graphe, Graphe)
+
+
 def test_initialisation_simplissime():
     """Vérification sur le graphe le plus simple."""
     gra = Graphe.default(2)
