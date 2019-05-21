@@ -10,7 +10,7 @@
 """
 Implémentation de l'algorithme de recuit simulé.
 """
-from math import exp
+from math import exp, log
 import random as rd
 from src.graphe import Graphe
 from src.glouton import glouton
@@ -36,3 +36,9 @@ def recuit(nb_max, temperature):
         if rd.random() > auxiliaire(en2 / en1):
             graphe.inversion()
     return graphe
+
+
+def temp_log(nb_iterations, cte=1.0):
+    """Schéma de température logarithmique."""
+    for i in range(2, nb_iterations + 2):
+        yield cte / log(i)
