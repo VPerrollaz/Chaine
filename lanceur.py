@@ -1,24 +1,30 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
+
 """
 Usage:
-    lanceur.py [--max=<max>] [--nbiter=<nbiter>]
+    lanceur.py (log | lin) [options]
 
 Options:
-    -n --nbiter=<1000>   Nombre d'itération effectué par le recuit [default: 1000]
-    -m --max=<100>       Taille du dernier entier accessible [default: 10]
+    -n --nbiter=<1000>   Itérations effectué par le recuit [default: 1000]
+    -m --max=<10>        Taille du dernier entier accessible [default: 10]
+    -t --temp=<temp>     Température initiale [default: 1]
     -h --help            Affiche ce message d'aide
 """
+
 from docopt import docopt
-from src.recuit import temp_log, recuit
+from src.recuit import recuit
 from src.glouton import glouton
+from src.temperatures import temp_log, temp_lin
 
 
-def main(nb_iter, entier_max):
+def main(nb_iter, entier_max, t_ini, schema_temp):
     """Entrée du script."""
-    print(f"Entier de 1 à {entier_max}")
+    print(f"Entiers de 1 à {entier_max}")
+    print(f"Température initiale : {t_ini}")
+    print(f"Schéma de température : {schema_temp.__name__}")
     print(f"Nombre d'itérations : {nb_iter}\n")
-    temperature = temp_log(nb_iter, float(entier_max))
+    temperature = schema_temp(nb_iter, t_ini)
     resultat, meilleure, t_finale = recuit(entier_max, temperature)
     print(f"Meilleure chaine : {meilleure}")
     print(f"Longueur : {len(meilleure)}\n")
@@ -31,4 +37,9 @@ if __name__ == "__main__":
     OPTIONS = docopt(__doc__)
     NB_ITER = int(OPTIONS["--nbiter"])
     ENTIER_MAX = int(OPTIONS["--max"])
-    main(NB_ITER, ENTIER_MAX)
+    TEMPERATURE_INI = float(OPTIONS["--temp"])
+    if OPTIONS["lin"]:
+        SCHEMA = temp_lin
+    elif OPTIONS["log"]:
+        SCHEMA = temp_log
+    main(NB_ITER, ENTIER_MAX, TEMPERATURE_INI, SCHEMA)
