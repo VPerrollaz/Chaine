@@ -84,6 +84,7 @@ class Graphe:
         else:
             entier, voisin1, voisin2 = mouvement.donnees
             echange(self.voisinage[entier], voisin1, voisin2)
+        self.dernier = mouvement
 
     def mutation(self):
         """Détermine une transition possible et l'ajoute à l'historique."""
@@ -94,7 +95,6 @@ class Graphe:
             voisin1, voisin2 = rd.sample(self.voisinage[entier], 2)
             donnees = (entier, voisin1, voisin2)
         mouv = Mouvement(donnees)
-        self.dernier = mouv
         self.modification(mouv)
 
     def inversion(self):

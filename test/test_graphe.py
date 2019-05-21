@@ -62,3 +62,27 @@ def test_initialisation_moins_simple():
     assert gra.voisinage[8] == [1, 2, 4]
     assert gra.voisinage[9] == [1, 3]
     assert gra.voisinage[10] == [1, 2, 5]
+
+
+def test_modification_demarrage():
+    """Modification et reversion par démarrage."""
+    graphe = Graphe.default(3)
+    mouv = Mouvement((1, 2))
+    graphe.modification(mouv)
+    assert graphe.demarrage == [2, 1, 3]
+    assert graphe.dernier is mouv
+    graphe.inversion()
+    assert graphe.demarrage == [1, 2, 3]
+    assert graphe.dernier is None
+
+
+def test_modification_voisinage():
+    """Modification et reversion par voisinage."""
+    graphe = Graphe.default(3)
+    mouv = Mouvement((1, 2, 3))
+    graphe.modification(mouv)
+    assert graphe.voisinage[1] == [3, 2]
+    assert graphe.dernier is mouv
+    graphe.inversion()
+    assert graphe.voisinage[1] == [2, 3]
+    assert graphe.dernier is None
