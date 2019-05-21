@@ -55,6 +55,10 @@ class Graphe:
         self.demarrage = demarrage
         self.voisinage = voisinage
         self.dernier = None
+        self.admissibles = list()
+        for nombre in self.demarrage:
+            if len(self.voisinage[nombre]) > 1:
+                self.admissibles.append(nombre)
 
     @classmethod
     def default(cls, nb_sommets):
@@ -91,7 +95,7 @@ class Graphe:
         if rd.random() > 0.5:
             donnees = rd.sample(self.demarrage, 2)
         else:
-            entier = rd.choice(self.demarrage)
+            entier = rd.choice(self.admissibles)
             voisin1, voisin2 = rd.sample(self.voisinage[entier], 2)
             donnees = (entier, voisin1, voisin2)
         mouv = Mouvement(donnees)

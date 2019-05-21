@@ -10,8 +10,8 @@
 """
 Test concernant recuit.py
 """
-from src.recuit import auxiliaire
 from math import isclose
+from src.recuit import auxiliaire
 
 
 def test_auxiliaire():
