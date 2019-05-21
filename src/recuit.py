@@ -21,7 +21,7 @@ def auxiliaire(nombre: float) -> float:
     return nombre / (1 + nombre)
 
 
-def energie(chaine: list, temp: float) -> float:
+def energie(chaine: list, temp: float, normalisation: float) -> float:
     """Calcul de l'énergie d'un graphe pour un niveau de température donné."""
     return exp(len(chaine) / temp)
 
@@ -36,6 +36,8 @@ def recuit(nb_max, temperature):
         ch2 = glouton(graphe)
         if len(ch2) > len(meilleure):
             meilleure = ch2
-        elif rd.random() > auxiliaire(energie(ch2, temp) / energie(ch1, temp)):
+        elif rd.random() > auxiliaire(
+            energie(ch2, temp, nb_max) / energie(ch1, temp, nb_max)
+        ):
             graphe.inversion()
     return graphe, meilleure, temp

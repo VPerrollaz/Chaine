@@ -22,10 +22,10 @@ def temp_log(nb_iterations, t_ini):
 def temp_lin(nb_iterations, t_ini):
     """Schéma de descente linéaire."""
     for i in range(nb_iterations):
-        yield t_ini * (1.1 - i / nb_iterations)
+        yield 0.1 + t_ini * (1.0 - i / nb_iterations)
 
 
 def temp_quad(nb_iterations, t_ini):
     """Schéma de température quadratique."""
     for i in range(nb_iterations):
-        yield t_ini * (2.0 - i / nb_iterations) ** 2
+        yield 0.1 + t_ini * (1.0 - i / nb_iterations) ** 2
