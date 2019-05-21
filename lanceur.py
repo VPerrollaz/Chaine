@@ -3,7 +3,7 @@
 
 """
 Usage:
-    lanceur.py (log | lin) [options]
+    lanceur.py (log | lin | quad) [options]
 
 Options:
     -n --nbiter=<1000>   Itérations effectué par le recuit [default: 1000]
@@ -15,13 +15,13 @@ Options:
 from docopt import docopt
 from src.recuit import recuit
 from src.glouton import glouton
-from src.temperatures import temp_log, temp_lin
+from src.temperatures import temp_log, temp_lin, temp_quad
 
 
 def main(nb_iter, entier_max, t_ini, schema_temp):
     """Entrée du script."""
     print(f"Entiers de 1 à {entier_max}")
-    print(f"Température initiale : {t_ini}")
+    print(f"Constante de température : {t_ini}")
     print(f"Schéma de température : {schema_temp.__name__}")
     print(f"Nombre d'itérations : {nb_iter}\n")
     temperature = schema_temp(nb_iter, t_ini)
@@ -42,4 +42,6 @@ if __name__ == "__main__":
         SCHEMA = temp_lin
     elif OPTIONS["log"]:
         SCHEMA = temp_log
+    elif OPTIONS["quad"]:
+        SCHEMA = temp_quad
     main(NB_ITER, ENTIER_MAX, TEMPERATURE_INI, SCHEMA)

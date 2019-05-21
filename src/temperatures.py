@@ -13,13 +13,19 @@ Schémas de température.
 from math import log
 
 
-def temp_log(nb_iterations, cte):
+def temp_log(nb_iterations, t_ini):
     """Schéma de température logarithmique."""
     for i in range(2, nb_iterations + 2):
-        yield cte / log(i)
+        yield t_ini / log(i)
 
 
-def temp_lin(nb_iterations, cte):
+def temp_lin(nb_iterations, t_ini):
     """Schéma de descente linéaire."""
     for i in range(nb_iterations):
-        yield cte * (nb_iterations - i)
+        yield t_ini * (1.1 - i / nb_iterations)
+
+
+def temp_quad(nb_iterations, t_ini):
+    """Schéma de température quadratique."""
+    for i in range(nb_iterations):
+        yield t_ini * (2.0 - i / nb_iterations) ** 2
