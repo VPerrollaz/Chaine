@@ -23,7 +23,7 @@ def auxiliaire(nombre: float) -> float:
 
 def energie(chaine: list, temp: float, normalisation: float) -> float:
     """Calcul de l'énergie d'un graphe pour un niveau de température donné."""
-    return exp(len(chaine) / temp)
+    return exp(len(chaine) / (temp * normalisation))
 
 
 def recuit(nb_max, temperature):
