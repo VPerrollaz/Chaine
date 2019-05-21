@@ -36,7 +36,7 @@ class Mouvement:
         if len(donnees) == 2:
             self.genre = Genre.Demarrage
         else:
-            self.genere = Genre.Voisinage
+            self.genre = Genre.Voisinage
         self.donnees = donnees
 
     def __repr__(self):

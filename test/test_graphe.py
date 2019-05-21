@@ -11,7 +11,7 @@
 Teste du module graphe.
 """
 
-from src.graphe import Graphe, Mouvement, echange
+from src.graphe import Genre, Graphe, Mouvement, echange
 
 
 def test_echange():
@@ -21,10 +21,18 @@ def test_echange():
     assert liste == [2, 1]
 
 
-def test_instanciation_mouvement():
-    """Test instanciation et repr sur le graphe à trois sommets."""
-    mouv = Mouvement((1, 2), (1, 2, 3))
-    assert repr(mouv) == "Mouvement((1, 2), (1, 2, 3))"
+def test_mouvement_demarrage():
+    """Test d'un mouvement sur le démarrage."""
+    mouv = Mouvement((1, 2))
+    assert repr(mouv) == "Mouvement((1, 2))"
+    assert mouv.genre is Genre.Demarrage
+
+
+def test_mouvement_voisinage():
+    """Test d'un mouvement sur le voisinage."""
+    mouv = Mouvement((1, 2, 3))
+    assert repr(mouv) == "Mouvement((1, 2, 3))"
+    assert mouv.genre is Genre.Voisinage
 
 
 def test_initialisation_simplissime():
