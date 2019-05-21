@@ -36,7 +36,7 @@ def recuit(nb_max, temperature, debug=False):
         if rd.random() > auxiliaire(en2 / en1):
             graphe.inversion()
         elif debug:
-            print(glouton(graphe))
+            print(len(glouton(graphe)), end=", ")
     return graphe
 
 
