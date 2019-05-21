@@ -17,14 +17,16 @@ from src.glouton import glouton
 
 def main(nb_iter):
     """Entrée du script."""
+    print("Nombre d'itérations : ", nb_iter)
     temperature = temp_log(nb_iter, 10.0)
-    resultat = recuit(10, temperature, debug=True)
-    print(glouton(resultat))
+    resultat, meilleure = recuit(10, temperature)
+    print("Meilleure chaine : ", meilleure)
+    print("Chaine finale : ", glouton(resultat))
 
 
 if __name__ == "__main__":
     try:
-        nb_iter = int(sys.argv[1])
+        NB_ITER = int(sys.argv[1])
     except IndexError:
-        nb_iter = 100
-    main(nb_iter)
+        NB_ITER = 100
+    main(NB_ITER)
