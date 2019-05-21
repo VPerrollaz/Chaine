@@ -26,7 +26,7 @@ def energie(graphe: Graphe, temp: float) -> float:
     return exp(len(glouton(graphe)) / temp)
 
 
-def recuit(nb_max, temperature):
+def recuit(nb_max, temperature, debug=False):
     """Implémente le recuit pour l'itérateur de température donné"""
     graphe = Graphe.default(nb_max)
     for temp in temperature:
@@ -35,6 +35,8 @@ def recuit(nb_max, temperature):
         en2 = energie(graphe, temp)
         if rd.random() > auxiliaire(en2 / en1):
             graphe.inversion()
+        elif debug:
+            print(glouton(graphe))
     return graphe
 
 
