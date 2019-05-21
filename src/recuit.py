@@ -38,7 +38,7 @@ def recuit(nb_max, temperature):
             meilleure = ch2
         elif rd.random() > auxiliaire(energie(ch2, temp) / energie(ch1, temp)):
             graphe.inversion()
-    return graphe, meilleure
+    return graphe, meilleure, temp
 
 
 def temp_log(nb_iterations, cte=1.0):
