@@ -19,13 +19,13 @@ from src.glouton import glouton
 def recuit(nb_max, temperature):
     """Implémente le recuit pour l'itérateur de température donné"""
     graphe = Graphe.default(nb_max)
-    meilleure = list()
+    meilleure = glouton(graphe)
     for temp in temperature:
         ch1 = glouton(graphe)
         graphe.mutation()
         ch2 = glouton(graphe)
         if len(ch2) > len(ch1):
-            if len(ch2) < len(meilleure):
+            if len(ch2) > len(meilleure):
                 meilleure = ch2
         elif rd.random() > exp((len(ch2) - len(ch1)) / temp):
             graphe.inversion()
