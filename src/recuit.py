@@ -16,16 +16,6 @@ from src.graphe import Graphe
 from src.glouton import glouton
 
 
-def auxiliaire(nombre: float) -> float:
-    """Fonction auxiliaire de l'algorithme de recuit."""
-    return nombre / (1 + nombre)
-
-
-def energie(chaine: list, temp: float, normalisation: float) -> float:
-    """Calcul de l'énergie d'un graphe pour un niveau de température donné."""
-    return exp(len(chaine) / (temp * normalisation))
-
-
 def recuit(nb_max, temperature):
     """Implémente le recuit pour l'itérateur de température donné"""
     graphe = Graphe.default(nb_max)
@@ -34,10 +24,9 @@ def recuit(nb_max, temperature):
         ch1 = glouton(graphe)
         graphe.mutation()
         ch2 = glouton(graphe)
-        if len(ch2) > len(meilleure):
-            meilleure = ch2
-        elif rd.random() > auxiliaire(
-            energie(ch2, temp, nb_max) / energie(ch1, temp, nb_max)
-        ):
+        if len(ch2) > len(ch1):
+            if len(ch2) < len(meilleure):
+                meilleure = ch2
+        elif rd.random() > exp((len(ch2) - len(ch1)) / temp):
             graphe.inversion()
     return graphe, meilleure, temp
