@@ -35,7 +35,7 @@ impl Graphe {
         for i in 1..=n {
             let mut temp: Vec<u16> = Vec::new();
             for j in 1..=n {
-                if (i % j == 0) || (j % i == 0) {
+                if (i != j) && ((i % j == 0) || (j % i == 0)) {
                     temp.push(j);
                 }
             }
@@ -110,6 +110,19 @@ mod tests {
 
     #[test]
     fn creation_graphe_test() {
-        let _g = Graphe::new(5u16);
+        let g = Graphe::new(3u16);
+        assert_eq!(g.demarrage, 1);
+        assert_eq!(g.voisinage.get(&1).unwrap(), &vec![2u16, 3]);
+    }
+
+    #[test]
+    fn modification_graphe_test() {
+        let mut g = Graphe::new(3u16);
+        let md = Mouvement::Demarrage(1, 2);
+        let mv = Mouvement::Voisinage(1, 2, 3);
+        g.modification(md);
+        assert_eq!(g.demarrage, 2);
+        g.modification(mv);
+        assert_eq!(g.voisinage.get(&1).unwrap(), &vec![3, 2u16]);
     }
 }
