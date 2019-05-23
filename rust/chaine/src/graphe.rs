@@ -1,26 +1,36 @@
+// extern crate rand;
+
 use std::collections::HashMap;
 
 #[allow(dead_code)]
-pub enum Mouvement {
+enum Mouvement {
     Demarrage(u16, u16),
     Voisinage(u16, u16, u16),
 }
 
 #[allow(dead_code)]
 pub struct Graphe {
-    demarrage: Vec<u16>,
+    demarrage: u16,
     voisinage: HashMap<u16, Vec<u16>>,
     admissibles: Vec<u16>,
     dernier: Option<Mouvement>,
 }
 
+#[allow(dead_code)]
+fn echange(liste: &mut Vec<u16>, b: u16, c: u16) {
+    for i in 0..liste.len() {
+        if liste[i] == c {
+            liste[i] = b;
+        } else if liste[i] == b {
+            liste[i] = c;
+        }
+    }
+}
+
 impl Graphe {
     #[allow(dead_code)]
-    fn new(n: u16) -> Graphe {
-        let mut demarrage: Vec<u16> = Vec::new();
-        for i in 1..=n {
-            demarrage.push(i);
-        }
+    pub fn new(n: u16) -> Graphe {
+        let demarrage: u16 = 1;
         let mut voisinage: HashMap<u16, Vec<u16>> = HashMap::new();
         for i in 1..=n {
             let mut temp: Vec<u16> = Vec::new();
@@ -45,6 +55,22 @@ impl Graphe {
             dernier,
         }
     }
+
+    #[allow(dead_code)]
+    fn modification(&mut self, m: Mouvement) {
+        match m {
+            Mouvement::Demarrage(a, b) => {
+                if self.demarrage == a {
+                    self.demarrage = b;
+                } else if self.demarrage == b {
+                    self.demarrage = a;
+                } else {
+                    panic!("Aucun des deux entiers ne correspond au démarrage");
+                }
+            }
+            Mouvement::Voisinage(a, b, c) => echange(self.voisinage.get_mut(&a).unwrap(), b, c),
+        }
+    }
 }
 
 #[cfg(test)]
@@ -53,8 +79,8 @@ mod tests {
 
     #[test]
     fn creation_mouvement_test() {
-        let d: Mouvement = Mouvement::Demarrage(1, 2);
-        let v: Mouvement = Mouvement::Voisinage(1, 2, 3);
+        let _d: Mouvement = Mouvement::Demarrage(1, 2);
+        let _v: Mouvement = Mouvement::Voisinage(1, 2, 3);
     }
 
     #[test]
@@ -62,17 +88,28 @@ mod tests {
         let d: Mouvement = Mouvement::Demarrage(1, 2);
         let v: Mouvement = Mouvement::Voisinage(1, 2, 3);
         match d {
-            Mouvement::Demarrage(a, b) => assert_eq!(a, 1u16),
+            Mouvement::Demarrage(a, _b) => assert_eq!(a, 1u16),
             _ => panic!("Problème"),
         }
         match v {
-            Mouvement::Voisinage(a, b, c) => assert_eq!(a, 1u16),
+            Mouvement::Voisinage(a, _b, _c) => assert_eq!(a, 1u16),
             _ => panic!("Oups"),
         }
     }
 
     #[test]
+    fn echange_test() {
+        let mut liste: Vec<u16> = Vec::new();
+        liste.append(&mut vec![1, 2, 3]);
+        assert_eq!(liste[0], 1);
+        assert_eq!(liste[1], 2);
+        echange(&mut liste, 1, 2);
+        assert_eq!(liste[0], 2);
+        assert_eq!(liste[1], 1);
+    }
+
+    #[test]
     fn creation_graphe_test() {
-        let g = Graphe::new(5u16);
+        let _g = Graphe::new(5u16);
     }
 }
