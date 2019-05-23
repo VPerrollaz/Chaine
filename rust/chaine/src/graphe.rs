@@ -3,6 +3,7 @@
 use std::collections::HashMap;
 
 #[allow(dead_code)]
+#[derive(Copy, Clone)]
 enum Mouvement {
     Demarrage(u16, u16),
     Voisinage(u16, u16, u16),
