@@ -57,18 +57,18 @@ impl Graphe {
     }
 
     #[allow(dead_code)]
-    fn modification(&mut self, m: Mouvement) {
+    fn modification(&mut self, m: &Mouvement) {
         match m {
             Mouvement::Demarrage(a, b) => {
-                if self.demarrage == a {
-                    self.demarrage = b;
-                } else if self.demarrage == b {
-                    self.demarrage = a;
+                if self.demarrage == *a {
+                    self.demarrage = *b;
+                } else if self.demarrage == *b {
+                    self.demarrage = *a;
                 } else {
                     panic!("Aucun des deux entiers ne correspond au démarrage");
                 }
             }
-            Mouvement::Voisinage(a, b, c) => echange(self.voisinage.get_mut(&a).unwrap(), b, c),
+            Mouvement::Voisinage(a, b, c) => echange(self.voisinage.get_mut(&a).unwrap(), *b, *c),
         }
     }
 }
@@ -120,9 +120,11 @@ mod tests {
         let mut g = Graphe::new(3u16);
         let md = Mouvement::Demarrage(1, 2);
         let mv = Mouvement::Voisinage(1, 2, 3);
-        g.modification(md);
+        g.modification(&md);
         assert_eq!(g.demarrage, 2);
-        g.modification(mv);
+        g.modification(&md);
+        assert_eq!(g.demarrage, 1);
+        g.modification(&mv);
         assert_eq!(g.voisinage.get(&1).unwrap(), &vec![3, 2u16]);
     }
 }
