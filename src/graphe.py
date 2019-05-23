@@ -52,6 +52,7 @@ class Graphe:
     """Classe permettant la paramétrisation d'un algorithme glouton."""
 
     def __init__(self, demarrage, voisinage):
+        self.plus_grand = max(voisinage.keys())
         self.demarrage = demarrage
         self.voisinage = voisinage
         self.dernier = None
@@ -63,7 +64,7 @@ class Graphe:
     @classmethod
     def default(cls, nb_sommets):
         """Initialisation par ordre croissant."""
-        demarrage = list(range(1, nb_sommets + 1))
+        demarrage = 1
         voisinage = dict()
         for i in range(1, nb_sommets + 1):
             voisinage[i] = list()
@@ -84,7 +85,12 @@ class Graphe:
         """Modifie le graphe en fonction du mouvement demandé."""
         if mouvement.genre is Genre.Demarrage:
             entier1, entier2 = mouvement.donnees
-            echange(self.demarrage, entier1, entier2)
+            if self.demarrage == entier1:
+                self.demarrage == entier2
+            elif self.demarrage == entier2:
+                self.demarrage == entier1
+            else:
+                raise ValueError("Aucun des deux nombres n'est le démarrage.")
         else:
             entier, voisin1, voisin2 = mouvement.donnees
             echange(self.voisinage[entier], voisin1, voisin2)
@@ -93,7 +99,7 @@ class Graphe:
     def mutation(self):
         """Détermine une transition possible et l'ajoute à l'historique."""
         if rd.random() > 0.5:
-            donnees = rd.sample(self.demarrage, 2)
+            donnees = (self.demarrage, rd.randint(1, self.plus_grand))
         else:
             entier = rd.choice(self.admissibles)
             voisin1, voisin2 = rd.sample(self.voisinage[entier], 2)
