@@ -71,6 +71,16 @@ impl Graphe {
             Mouvement::Voisinage(a, b, c) => echange(self.voisinage.get_mut(&a).unwrap(), *b, *c),
         }
     }
+    #[allow(dead_code)]
+    fn inversion(&mut self) {
+        match self.dernier {
+            Some(m) => {
+                self.modification(&m);
+                self.dernier = None;
+            }
+            None => panic!("Pas de dernier mouvement à inverser."),
+        }
+    }
 }
 
 #[cfg(test)]
