@@ -3,19 +3,19 @@
 
 """
 Usage:
-    lanceur.py (log | lin | quad) [options]
+    lanceur.py (log | lin | quad | pal) [options]
 
 Options:
     -n --nbiter=<1000>   Itérations effectué par le recuit [default: 1000]
     -m --max=<10>        Taille du dernier entier accessible [default: 10]
-    -t --temp=<temp>     Température initiale [default: 1]
+    -t --temp=<1>     Température initiale [default: 1]
     -h --help            Affiche ce message d'aide
 """
 
 from docopt import docopt
 from src.recuit import recuit
 from src.glouton import glouton
-from src.temperatures import temp_log, temp_lin, temp_quad
+from src.temperatures import temp_log, temp_lin, temp_quad, temp_palier
 
 
 def main(nb_iter, entier_max, t_ini, schema_temp):
@@ -44,4 +44,6 @@ if __name__ == "__main__":
         SCHEMA = temp_log
     elif OPTIONS["quad"]:
         SCHEMA = temp_quad
+    elif OPTIONS["pal"]:
+        SCHEMA = temp_palier
     main(NB_ITER, ENTIER_MAX, TEMPERATURE_INI, SCHEMA)

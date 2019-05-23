@@ -18,9 +18,9 @@ Dans les deux cas les probabilité de passer de x à y et de y à x sont égales
 
 On utilisera le script lanceur.py pour faire tourner des simulations via 
 ```
-lanceur.py (log | lin | quad) [--nbiter=NB] [--max=NB] [--temp=NB]
+lanceur.py (log | lin | quad | pal) [--nbiter=NB] [--max=NB] [--temp=NB]
 ```
-On a le choix entre trois schémas de température via la sous commande log/lin/quad.
+On a le choix entre trois schémas de température via la sous commande log/lin/quad/pal.
 
 On peut choisir
 - le nombre d'itération du schéma via --nbiter,
