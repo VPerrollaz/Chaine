@@ -98,7 +98,7 @@ class Graphe:
 
     def mutation(self):
         """Détermine une transition possible et l'ajoute à l'historique."""
-        if rd.random() > 0.5:
+        if rd.random() > 0.9:
             donnees = (self.demarrage, rd.randint(1, self.plus_grand))
         else:
             entier = rd.choice(self.admissibles)
