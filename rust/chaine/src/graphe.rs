@@ -1,5 +1,6 @@
-// extern crate rand;
+extern crate rand;
 
+use rand::prelude::*;
 use std::collections::HashMap;
 
 #[allow(dead_code)]
@@ -15,6 +16,7 @@ pub struct Graphe {
     voisinage: HashMap<u16, Vec<u16>>,
     admissibles: Vec<u16>,
     dernier: Option<Mouvement>,
+    generateur: ThreadRng,
 }
 
 #[allow(dead_code)]
@@ -49,11 +51,13 @@ impl Graphe {
             }
         }
         let dernier: Option<Mouvement> = None;
+        let generateur: ThreadRng = thread_rng();
         Graphe {
             demarrage,
             voisinage,
             admissibles,
             dernier,
+            generateur,
         }
     }
 
@@ -82,6 +86,27 @@ impl Graphe {
             }
             None => panic!("Pas de dernier mouvement à inverser."),
         }
+    }
+
+    #[allow(dead_code)]
+    fn mutation(&mut self) {
+        let mouv: Mouvement = if self.generateur.gen::<f64>() < 0.1 {
+            Mouvement::Demarrage(
+                self.demarrage,
+                (1..101).choose(&mut self.generateur).unwrap(),
+            )
+        } else {
+            let entier: u16 = self
+                .admissibles
+                .choose(&mut self.generateur)
+                .unwrap()
+                .clone();
+            let choix = self.voisinage[&entier]
+                .iter()
+                .choose_multiple(&mut self.generateur, 2);
+            Mouvement::Voisinage(entier, choix[0].clone(), choix[1].clone())
+        };
+        self.modification(mouv);
     }
 }
 
@@ -147,5 +172,11 @@ mod tests {
         g.modification(md);
         g.inversion();
         assert_eq!(g.demarrage, 1);
+    }
+
+    #[test]
+    fn mutation_graphe_test() {
+        let mut g = Graphe::new(3u16);
+        g.mutation();
     }
 }
