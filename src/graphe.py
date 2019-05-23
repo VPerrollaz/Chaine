@@ -86,9 +86,9 @@ class Graphe:
         if mouvement.genre is Genre.Demarrage:
             entier1, entier2 = mouvement.donnees
             if self.demarrage == entier1:
-                self.demarrage == entier2
+                self.demarrage = entier2
             elif self.demarrage == entier2:
-                self.demarrage == entier1
+                self.demarrage = entier1
             else:
                 raise ValueError("Aucun des deux nombres n'est le démarrage.")
         else:
