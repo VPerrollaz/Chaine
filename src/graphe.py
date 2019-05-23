@@ -57,7 +57,7 @@ class Graphe:
         self.voisinage = voisinage
         self.dernier = None
         self.admissibles = list()
-        for nombre in self.demarrage:
+        for nombre in self.voisinage.keys():
             if len(self.voisinage[nombre]) > 1:
                 self.admissibles.append(nombre)
 

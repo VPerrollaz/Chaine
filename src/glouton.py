@@ -18,7 +18,7 @@ def glouton(gra: Graphe) -> list:
     """Récupère un Graphe, renvoit la chaine générée."""
     chaine = list()
     visites = set()
-    premier = gra.demarrage[0]
+    premier = gra.demarrage
     chaine.append(premier)
     visites.add(premier)
     while True:
