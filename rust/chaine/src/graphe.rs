@@ -96,15 +96,11 @@ impl Graphe {
                 (1..101).choose(&mut self.generateur).unwrap(),
             )
         } else {
-            let entier: u16 = self
-                .admissibles
-                .choose(&mut self.generateur)
-                .unwrap()
-                .clone();
-            let choix = self.voisinage[&entier]
+            let entier: &u16 = self.admissibles.choose(&mut self.generateur).unwrap();
+            let choix = self.voisinage[entier]
                 .iter()
                 .choose_multiple(&mut self.generateur, 2);
-            Mouvement::Voisinage(entier, choix[0].clone(), choix[1].clone())
+            Mouvement::Voisinage(*entier, *choix[0], *choix[1])
         };
         self.modification(mouv);
     }
