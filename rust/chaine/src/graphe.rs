@@ -56,7 +56,7 @@ impl Graphe {
     }
 
     #[allow(dead_code)]
-    fn modification(&mut self, m: Mouvement) {
+    pub fn modification(&mut self, m: Mouvement) {
         match m {
             Mouvement::Demarrage(a, b) => {
                 if self.demarrage == a {

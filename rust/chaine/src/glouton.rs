@@ -22,12 +22,21 @@ fn glouton(gr: Graphe) -> Vec<u16> {
 
 #[cfg(test)]
 mod tests {
+    use super::super::mouvement::Mouvement;
     use super::{glouton, Graphe};
 
     #[test]
-    fn glouton_test() {
+    fn glouton_simple_test() {
         let gr = Graphe::new(8u16);
         let resultat = glouton(gr);
         assert_eq!(resultat, vec![1, 2, 4, 8]);
+    }
+
+    #[test]
+    fn glouton_test() {
+        let mut gr = Graphe::new(3u16);
+        let mouv = Mouvement::Voisinage(1, 2, 3);
+        gr.modification(mouv);
+        assert_eq!(glouton(gr), vec![1, 3]);
     }
 }
