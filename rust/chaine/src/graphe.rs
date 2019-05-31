@@ -12,8 +12,8 @@ enum Mouvement {
 
 #[allow(dead_code)]
 pub struct Graphe {
-    demarrage: u16,
-    voisinage: HashMap<u16, Vec<u16>>,
+    pub demarrage: u16,
+    pub voisinage: HashMap<u16, Vec<u16>>,
     admissibles: Vec<u16>,
     dernier: Option<Mouvement>,
     generateur: ThreadRng,
